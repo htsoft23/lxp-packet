@@ -1,0 +1,64 @@
+Reverse-engineered packet analysis when talking to my LXP ACS inverter.
+
+E&OE - this may not be complete or correct, please exercise care!
+
+All numbers appear to be transmitted least significant byte first. Numbers
+in this document are presented in decimal.
+
+Most packets appear to be 38 bytes (though this can vary). There appears
+to be a prefix of 6 bytes:
+
+ BYTE BYTES VALUE MEANING
+    0     1   161 Prefix
+    1     1    26 Prefix
+    2     2       protocol number
+    4     2       frame length
+
+Protocol number normally seems to be 1, though I've seen 2 returned from the
+inverter.
+
+Frame length is a count of all bytes after those 6, so for a usual 38 byte
+packet, this will be 32.
+
+Then there's a header:
+
+ BYTE BYTES VALUE MEANING
+    6     1     1 always seems to be 1
+    7     1       TCP_FUNCTION; 193=heartbeat
+                                194=data to translate
+                                195=read param 196=write param
+    8    10       datalog serial number
+   18     2       data frame length or heartbeat number?
+
+Mostly the packets I've been dealing with have TCP_FUNCTION 194. I ignore
+heartbeats, and I've not seen 195 or 196 I don't think.
+
+For 194, bytes 18/19 are the data frame length which should match the number
+of bytes that follows. It's sometimes easier to think of the dataframe as
+its own structure so here are byte offsets in both the dataframe and the entire
+packet:
+
+ BYTE BYTES VALUE MEANING
+ 0/20     1       address? 0 when writing to inverter, 1 when reading?
+ 1/21     1       DEVICE_FUNCTION; 3=R_HOLD 4=R_INPUT 6=W_SINGLE 16=W_MULTI
+ 2/22    10       inverter serial number
+12/32     2       register (also start address - 0/40/80)
+14/34     2?      value (also point number)
+16/36     2       modbus_CRC16 (of bytes 0-15 of this dataframe)
+
+Data frames are usually 18 bytes, but I have seen 17 and 19. Sometimes there's
+a byte integer between the register and the value, I think this says how many
+value bytes there are. Not entirely clear when this will be such an int, or
+when it will be the first byte of the value though. Maybe just when len != 18?
+
+DEVICE_FUNCTION is basically the type of command. Not sure of the difference
+between R_HOLD and R_INPUT yet. W_SINGLE writes a single register; not used
+W_MULTI.
+
+To get the inverter to populate the response value for an R_HOLD, the value
+you send seems to need to be 1.
+
+Register and value are also referred to as start address and point number;
+this seems to be for the regular stats the inverter sends out every 2 minutes;
+seems to send 3 packets, the first one with address 0, then 40, then 80.
+Not really done much with this yet.
