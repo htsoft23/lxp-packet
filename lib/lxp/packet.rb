@@ -5,6 +5,7 @@ require_relative 'packet/register_bits'
 
 require_relative 'packet/parser'
 
+require_relative 'packet/heartbeat'
 require_relative 'packet/read_input1'
 require_relative 'packet/read_input2'
 require_relative 'packet/read_input3'

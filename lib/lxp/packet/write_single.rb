@@ -8,6 +8,7 @@ class LXP
       def initialize
         super
 
+        self.tcp_function = TcpFunctions::TRANSLATED_DATA
         self.device_function = DeviceFunctions::WRITE_SINGLE
         self.data_length = 18
       end

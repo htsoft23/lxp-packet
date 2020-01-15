@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'tcp_functions'
 require_relative 'device_functions'
 
 class LXP
@@ -28,9 +29,7 @@ class LXP
         # length after first 6 bytes maybe?
         self.packet_length = 32
 
-        @header[6] = 1 # unsure
-
-        @header[7] = 194 # translated data, TBD
+        @header[6] = 1 # unsure, always seems to be 1
       end
 
       def bytes
@@ -80,6 +79,14 @@ class LXP
       def packet_length=(packet_length)
         @header[4] = packet_length & 0xff
         @header[5] = (packet_length >> 8) & 0xff
+      end
+
+      def tcp_function
+        @header[7]
+      end
+
+      def tcp_function=(tcp_function)
+        @header[7] = tcp_function & 0xff
       end
 
       # Passed as a string

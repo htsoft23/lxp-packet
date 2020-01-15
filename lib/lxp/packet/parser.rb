@@ -23,7 +23,7 @@ class LXP
 
       def parse
         case bdata[7] # tcp_function
-        when TcpFunctions::HEARTBEAT then nil # ignored
+        when TcpFunctions::HEARTBEAT then Heartbeat.new
         when TcpFunctions::TRANSLATED_DATA then parse_translated_data
         else
           raise "unhandled tcp_function #{bdata[7]}"

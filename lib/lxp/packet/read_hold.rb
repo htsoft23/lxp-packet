@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative 'device_functions'
 
 class LXP
   class Packet
@@ -9,6 +8,7 @@ class LXP
       def initialize
         super
 
+        self.tcp_function = TcpFunctions::TRANSLATED_DATA
         self.device_function = DeviceFunctions::READ_HOLD
 
         self.data_length = 18

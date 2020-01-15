@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - move Utils module into LXP namespace
+- add Packet#tcp_function
+- add Heartbeat packet support
 
 ## [0.1.0] - 2020-01-05
 
