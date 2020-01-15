@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LXP
+class LXP
   module Utils
     module_function
 
