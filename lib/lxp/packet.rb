@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'utils'
+
 require_relative 'packet/registers'
 require_relative 'packet/register_bits'
 

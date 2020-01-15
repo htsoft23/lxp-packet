@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'utils'
 require_relative 'read_input'
 
 class LXP

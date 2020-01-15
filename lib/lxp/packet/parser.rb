@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'utils'
-
 require_relative 'device_functions'
 require_relative 'tcp_functions'
 
