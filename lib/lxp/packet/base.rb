@@ -64,7 +64,7 @@ class LXP
       end
 
       def protocol
-        @header[2] | @header[3] >> 8
+        @header[2] | @header[3] << 8
       end
 
       def protocol=(protocol)
@@ -73,7 +73,7 @@ class LXP
       end
 
       def packet_length
-        @header[4] | @header[5] >> 8
+        @header[4] | @header[5] << 8
       end
 
       def packet_length=(packet_length)
@@ -95,7 +95,7 @@ class LXP
       end
 
       def data_length
-        @header[18] | @header[19] >> 8
+        @header[18] | @header[19] << 8
       end
 
       def data_length=(data_length)
@@ -117,7 +117,7 @@ class LXP
       end
 
       def register
-        @data[12] | @data[13] >> 8
+        @data[12] | @data[13] << 8
       end
 
       def register=(register)
@@ -148,7 +148,7 @@ class LXP
         if value_length_byte?
           @data[15, value_length]
         else
-          @data[14] | @data[15] >> 8
+          @data[14] | @data[15] << 8
         end
       end
 
