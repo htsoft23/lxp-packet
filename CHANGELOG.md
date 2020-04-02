@@ -7,12 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2020-04-02
+
+### Fixed
+
+- decoding energy accumulation figures in ReadInput1 packets
+
 
 ## [0.2.0] - 2020-01-26
 
 ### Fixed
 
 - bitshifting logic when reading packets
+
 
 ## [0.1.2] - 2020-01-15
 
@@ -21,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - move Utils module into LXP namespace
 - add Packet#tcp_function
 - add Heartbeat packet support
+
 
 ## [0.1.0] - 2020-01-05
 
