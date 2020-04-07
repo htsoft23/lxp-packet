@@ -96,6 +96,22 @@ r = read_reply(sock, pkt)
 puts "Received: #{r.value}" # should be discharge cut-off value
 ```
 
+Usually, `ReadHold` instances contain the details of just one register. However, it is possible they can contain multiple. Pressing "Read" on the LuxPower Web Portal provokes the inverter into sending out 5 packets that each contain multiple registers, for example.
+
+To access these, you can use subscript notation to get a register directly, or call `#to_h` to get a hash of registers/values. For convenience this also works with single register packets, though obviously only one subscript will ever return data, and `to_h` will only have one key.
+
+```ruby
+# assuming pkt is a parsed packet with multiple registers/values:
+pkt[0] # => 35462 # value of register 0
+pkt.to_h # { 0 => 35462, 1 => 1, ... }
+
+# assuming pkt is a parsed packet with only register 21:
+pkt[21] # => value of register 21
+pkt[22] # => nil
+pkt.to_h # { 21 => 62292 }
+```
+
+
 ### Writing
 
 Updating a value on the inverter.
@@ -119,7 +135,7 @@ r = read_reply(sock, pkt)
 puts "Received: #{r.value}" # should be new discharge cut-off value, 20
 ```
 
-### Updating a multi-byte register
+### Updating a bitwise register
 
 The Lux has two registers that contain multiple settings. In `doc/LXP_REGISTERS.txt` you can see them at 21 and 110. They have two bytes.
 
@@ -127,7 +143,7 @@ This library combines them into a 16bit word, so that the constants in `LXP::Pac
 
 First you need to read the previous value, update it with a new bit, then write it back. This is really just a combination of the two above examples.
 
-This enables AC charge. You need to OR the bit with the previous value so as not to change other settings tored in register 21.
+This example enables AC charge. You need to OR the bit with the previous value so as not to change other settings stored in register 21.
 
 It could be improved not to bother doing the write if it was already enabled.
 
