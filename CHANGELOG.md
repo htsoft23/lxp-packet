@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- parsing of ReadHold packets with multiple registers/values
+- beginnings of a test suite!
+
+
 ## [0.3.0] - 2020-04-02
 
 ### Fixed

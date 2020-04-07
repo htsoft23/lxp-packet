@@ -26,7 +26,6 @@ class LXP
 
         self.protocol = 1
 
-        # length after first 6 bytes maybe?
         self.packet_length = 32
 
         @header[6] = 1 # unsure, always seems to be 1
@@ -89,6 +88,10 @@ class LXP
         @header[7] = tcp_function & 0xff
       end
 
+      def datalog_serial
+        @header[8, 10].pack('C*')
+      end
+
       # Passed as a string
       def datalog_serial=(datalog_serial)
         @header[8, 10] = datalog_serial.bytes
@@ -111,6 +114,10 @@ class LXP
         @data[1] = device_function
       end
 
+      def inverter_serial
+        @data[2, 10].pack('C*')
+      end
+
       # Passed as a string
       def inverter_serial=(inverter_serial)
         @data[2, 10] = inverter_serial.bytes
@@ -125,12 +132,6 @@ class LXP
         @data[13] = (register >> 8) & 0xff
       end
 
-      def value_length_byte?
-        @value_length_byte ||=
-          protocol == 2 &&
-          device_function != DeviceFunctions::WRITE_SINGLE
-      end
-
       def value_length
         if value_length_byte?
           @data[14]
@@ -142,13 +143,11 @@ class LXP
       # protocol 1 has value at 14 and 15
       # protocol 2 has length at 14, then that many bytes of values
       #
-      # So this can return an int or an array.
-      #
-      def value
+      def values
         if value_length_byte?
           @data[15, value_length]
         else
-          @data[14] | @data[15] << 8
+          @data[14, 2] # | @data[15] << 8
         end
       end
 
@@ -170,6 +169,12 @@ class LXP
       end
 
       private
+
+      def value_length_byte?
+        @value_length_byte ||=
+          protocol == 2 &&
+          device_function != DeviceFunctions::WRITE_SINGLE
+      end
 
       def crc16_modbus(arr)
         arr.length.times.inject(0xffff) do |r, n|

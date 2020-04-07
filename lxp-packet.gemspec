@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'bundler', '~> 2.0'
+  s.add_development_dependency 'rspec'
 end

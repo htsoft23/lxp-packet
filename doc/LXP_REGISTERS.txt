@@ -9,9 +9,10 @@ Registers 21 and 110 are bitmasks; normally you fetch the previous
 settings, apply your changes, and set the new value back.
 
 0 MODEL
-2 SERIAL_NUM
-7 FW_CODE
-12 TIME
+2-8 SERIAL_NUM
+7 FW_CODE ?
+9-10 ?
+12-14 TIME
 15 COM_ADDR
 16 LANGUAGE
 20 PV_INPUT_MODE

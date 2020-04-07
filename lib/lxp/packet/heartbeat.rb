@@ -15,10 +15,6 @@ class LXP
     #
     # They have no data and no checksum, so there's really not a lot here.
     #
-    # Ideally these could be instantiated via .parse, but they only seem to
-    # have one byte for the length, and .parse expects two. There's nothing
-    # to parse anyway so never mind.
-    #
     class Heartbeat < Base
       def initialize
         super

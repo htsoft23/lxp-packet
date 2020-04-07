@@ -18,18 +18,36 @@ class LXP
         self.value = 1
       end
 
-      # ReadHold packets should always (I think) have two byte values.
+      # Return the first value in a ReadHold packet. This is normally used
+      # when the packet only has one value.
       #
-      # Raise if not, as that is not expected?
+      # #values returns an Array. This converts it to an int.
       #
-      # Base#value will return an int for protocol 1, or an Array
-      # for protocol 2. If we can, convert that Array to an int.
-      #
-      def value
-        raise 'value_length not 2?' unless value_length == 2
+      def value(offset = 0)
+        Utils.int(values[offset, 2])
+      end
 
-        r = super
-        r.is_a?(Array) ? Utils.int(r, 2) : r
+      # Subscript notation is used when the ReadHold packet has multiple
+      # registers in it. This is indicated by value_length > 2.
+      #
+      # In this case, #register tells us the first register in the values, then
+      # each 2 bytes are subsequent registers.
+      #
+      def [](reg_num)
+        offset = (reg_num - register) * 2
+
+        return if offset.negative? || offset > data_length
+
+        value(offset)
+      end
+
+      # Return a Hash of all register->values in the ReadHold packet.
+      def to_h
+        r = register
+
+        values.each_slice(2).each_with_index.map do |v, idx|
+          [r + idx, Utils.int(v)]
+        end.to_h
       end
     end
   end
