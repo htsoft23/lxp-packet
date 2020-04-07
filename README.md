@@ -96,7 +96,7 @@ r = read_reply(sock, pkt)
 puts "Received: #{r.value}" # should be discharge cut-off value
 ```
 
-Usually, `ReadHold` instances contain the details of just one register. However, it is possible they can contain multiple. Pressing "Read" on the LuxPower Web Portal provokes the inverter into sending out 5 packets that each contain multiple registers, for example.
+Usually, `ReadHold` instances contain the details of just one register. However, it is possible they can contain multiple. Pressing "Read" on the LuxPower Web Portal provokes the inverter into sending out 5 packets that each contain multiple registers, for example. [TODO: work out how to request these packets ourselves]
 
 To access these, you can use subscript notation to get a register directly, or call `#to_h` to get a hash of registers/values. For convenience this also works with single register packets, though obviously only one subscript will ever return data, and `to_h` will only have one key.
 
