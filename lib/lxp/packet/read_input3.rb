@@ -8,10 +8,10 @@ class LXP
       # Decode the data and return a hash of values in this input packet
       def to_h
         {
-          max_chg_curr: Utils.int(@data[17, 2], :lsb) / 100.0, # A
-          max_dischg_curr: Utils.int(@data[19, 2], :lsb) / 100.0, # A
-          charge_volt_ref: Utils.int(@data[21, 2], :lsb) / 10.0, # V
-          dischg_cut_volt: Utils.int(@data[23, 2], :lsb) / 10.0, # V
+          max_chg_curr: Utils.int(@data[17, 2]) / 100.0, # A
+          max_dischg_curr: Utils.int(@data[19, 2]) / 100.0, # A
+          charge_volt_ref: Utils.int(@data[21, 2]) / 10.0, # V
+          dischg_cut_volt: Utils.int(@data[23, 2]) / 10.0, # V
 
           # are these actually 2 bytes as well?
           # never seen data in them so its hard to tell.
