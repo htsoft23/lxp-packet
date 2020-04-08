@@ -26,6 +26,8 @@ class LXP
           bat_status_8: @data[41],
           bat_status_9: @data[43],
           bat_status_inv: @data[45]
+
+          # 47/48 = battery count?
         }
       end
     end
