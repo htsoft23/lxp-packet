@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `t_bat` key in `ReadInput2#to_h` (suspect this is Lead Acid only as mine is 0)
+
+### Fixed
+
+- parsing of temperatures above 255C in ReadInput2
+
+
 ## [0.4.0] - 2020-04-07
 
 ### Added

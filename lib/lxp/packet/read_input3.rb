@@ -13,6 +13,8 @@ class LXP
           charge_volt_ref: Utils.int(@data[21, 2], :lsb) / 10.0, # V
           dischg_cut_volt: Utils.int(@data[23, 2], :lsb) / 10.0, # V
 
+          # are these actually 2 bytes as well?
+          # never seen data in them so its hard to tell.
           bat_status_0: @data[25],
           bat_status_1: @data[27],
           bat_status_2: @data[29],

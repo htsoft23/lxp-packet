@@ -77,4 +77,27 @@ RSpec.describe LXP::Packet::Parser do
       it { is_expected.to eq status: 16, v_bat: 49.7, soc: 95, p_pv: 0, p_charge: 0, p_discharge: 633, v_acr: 247.6, f_ac: 50.1, p_inv: 569, p_rec: 0, v_eps: 247.6, f_eps: 50.1, p_to_grid: 0, p_to_user: 0, e_pv_day: 22.1, e_inv_day: 4.2, e_rec_day: 7.3, e_chg_day: 8.6, e_dischg_day: 5.2, e_eps_day: 0.0, e_to_grid_day: 3.6, e_to_user_day: 0.2, v_bus_1: 375.6, v_bus_2: 299.7 }
     end
   end
+
+  context 'ReadInput2 data' do
+    let(:input) { [161, 26, 2, 0, 111, 0, 1, 194, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 97, 0, 1, 4, 88, 88, 88, 88, 88, 88, 88, 88, 88, 88, 40, 0, 80, 83, 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 179, 38, 0, 0, 43, 45, 0, 0, 105, 51, 0, 0, 44, 47, 0, 0, 0, 0, 0, 0, 95, 5, 0, 0, 63, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 36, 0, 37, 0, 0, 0, 0, 0, 35, 136, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 199] }
+
+    it { is_expected.to be_a LXP::Packet::ReadInput2 }
+
+    it 'has the correct attributes' do
+      expect(packet).to have_attributes register: 40,
+                                        values: [83, 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 179, 38, 0, 0, 43, 45, 0, 0, 105, 51, 0, 0, 44, 47, 0, 0, 0, 0, 0, 0, 95, 5, 0, 0, 63, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 36, 0, 37, 0, 0, 0, 0, 0, 35, 136, 224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                        protocol: 2,
+                                        packet_length: 111, data_length: 97,
+                                        tcp_function: LXP::Packet::TcpFunctions::TRANSLATED_DATA,
+                                        device_function: LXP::Packet::DeviceFunctions::READ_INPUT,
+                                        inverter_serial: 'XXXXXXXXXX',
+                                        datalog_serial: 'cccccccccc',
+                                        bytes: input
+    end
+
+    describe '#to_h' do
+      subject { packet.to_h }
+      it { is_expected.to eq e_chg_all: 1316.1, e_dischg_all: 1207.6, e_eps_all: 0.0, e_inv_all: 990.7, e_pv_all: 1774.7, e_rec_all: 1156.3, e_to_grid_all: 137.5, e_to_user_all: 1183.9, t_bat: 37, t_inner: 0, t_rad_1: 48, t_rad_2: 36 }
+    end
+  end
 end

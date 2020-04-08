@@ -17,9 +17,14 @@ class LXP
           e_to_grid_all: Utils.int(@data[47, 4], :lsb) / 10.0, # kWh
           e_to_user_all: Utils.int(@data[51, 4], :lsb) / 10.0, # kWh
 
-          t_inner: Utils.int(@data[62, 2], :msb),
-          t_rad_1: Utils.int(@data[64, 2], :msb),
-          t_rad_2: Utils.int(@data[66, 2], :msb)
+          # 55 .. 60?
+          #   fault code?
+          #   warning code?
+
+          t_inner: Utils.int(@data[61, 2], :lsb),
+          t_rad_1: Utils.int(@data[63, 2], :lsb),
+          t_rad_2: Utils.int(@data[65, 2], :lsb),
+          t_bat: Utils.int(@data[67, 2], :lsb)
         }
       end
     end
