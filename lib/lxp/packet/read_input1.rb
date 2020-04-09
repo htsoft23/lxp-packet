@@ -15,14 +15,21 @@ class LXP
 
           status: Utils.int(@data[15, 2]),
 
-          # 17-22 all observed zeroes (v_pv, v_pv_2, v_pv_3 ?)
+          v_pv_1: Utils.int(@data[17, 2]) / 10.0, # V
+          v_pv_2: Utils.int(@data[19, 2]) / 10.0, # V
+          v_pv_3: Utils.int(@data[21, 2]) / 10.0, # V
 
           v_bat: Utils.int(@data[23, 2]) / 10.0, # V
           soc: @data[25], # %
           # 26 used for anything?
 
-          # observed [0, 47] => 12032 or 0x2F00
+          # 27 always been 0 so far
+          # 28 I've seen anything from 0 to 53, changes occasionally but
+          # not spotted a pattern yet.
+          _unknown_i1_27: @data[27],
           _unknown_i1_28: @data[28],
+
+          # this might be useless if 27 and 28 are independent
           _unknown_i1_27_28: Utils.int(@data[27, 2]),
 
           p_pv: Utils.int(@data[29, 2]) +
@@ -41,7 +48,9 @@ class LXP
           p_inv: Utils.int(@data[47, 2]), # W
           p_rec: Utils.int(@data[49, 2]), # W
 
-          _unknown_i1_51_52: Utils.int(@data[51, 2]),
+          # this seems to track with charge/discharge but at lower values.
+          # no idea what this means.
+          _unknown_i1_51_52: Utils.int(@data[51, 2]), # W ?
 
           pf: Utils.int(@data[53, 2]) / 1000.0, # Hz
 

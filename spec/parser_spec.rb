@@ -74,7 +74,7 @@ RSpec.describe LXP::Packet::Parser do
 
     describe '#to_h' do
       subject { packet.to_h }
-      it { is_expected.to eq _unknown_i1_28: 47, _unknown_i1_27_28: 12_032, _unknown_i1_51_52: 227, status: 16, v_bat: 49.7, soc: 95, p_pv: 0, p_pv_1: 0, p_pv_2: 0, p_pv_3: 0, p_charge: 0, p_discharge: 633, v_ac_r: 247.6, v_ac_s: 0.1, v_ac_t: 0.0, f_ac: 50.1, p_inv: 569, p_rec: 0, pf: 1.0, v_eps_r: 247.6, v_eps_s: 281.6, v_eps_t: 2875.2, f_eps: 50.1, p_to_grid: 0, p_to_user: 0, e_pv_day: 22.1, e_pv_1_day: 22.1, e_pv_2_day: 0.0, e_pv_3_day: 0.0, e_inv_day: 4.2, e_rec_day: 7.3, e_chg_day: 8.6, e_dischg_day: 5.2, e_eps_day: 0.0, e_to_grid_day: 3.6, e_to_user_day: 0.2, v_bus_1: 375.6, v_bus_2: 299.7 }
+      it { is_expected.to eq _unknown_i1_27: 0, _unknown_i1_28: 47, _unknown_i1_27_28: 12_032, _unknown_i1_51_52: 227, status: 16, v_pv_1: 0.0, v_pv_2: 0.0, v_pv_3: 0.0, v_bat: 49.7, soc: 95, p_pv: 0, p_pv_1: 0, p_pv_2: 0, p_pv_3: 0, p_charge: 0, p_discharge: 633, v_ac_r: 247.6, v_ac_s: 0.1, v_ac_t: 0.0, f_ac: 50.1, p_inv: 569, p_rec: 0, pf: 1.0, v_eps_r: 247.6, v_eps_s: 281.6, v_eps_t: 2875.2, f_eps: 50.1, p_to_grid: 0, p_to_user: 0, e_pv_day: 22.1, e_pv_1_day: 22.1, e_pv_2_day: 0.0, e_pv_3_day: 0.0, e_inv_day: 4.2, e_rec_day: 7.3, e_chg_day: 8.6, e_dischg_day: 5.2, e_eps_day: 0.0, e_to_grid_day: 3.6, e_to_user_day: 0.2, v_bus_1: 375.6, v_bus_2: 299.7 }
     end
   end
 

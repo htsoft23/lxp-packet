@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- support `v_pv_*` keys in `ReadInput1`
+- support `bat_count` key in `ReadInput3`
 
 ## [0.5.0] - 2020-04-09
 

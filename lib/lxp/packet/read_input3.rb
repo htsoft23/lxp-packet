@@ -32,10 +32,9 @@ class LXP
           bat_status_7: @data[39],
           bat_status_8: @data[41],
           bat_status_9: @data[43],
-          bat_status_inv: @data[45]
+          bat_status_inv: @data[45],
 
-          # 47/48 = battery count? seen a 6 but unconfirmed it changes
-          # when battery count does.. TODO..
+          bat_count: Utils.int(@data[47, 2])
         }
       end
     end
