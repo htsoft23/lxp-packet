@@ -22,6 +22,7 @@ class LXP
           # 26 used for anything?
 
           # observed [0, 47] => 12032 or 0x2F00
+          _unknown_i1_28: @data[28],
           _unknown_i1_27_28: Utils.int(@data[27, 2]),
 
           p_pv: Utils.int(@data[29, 2]) +
