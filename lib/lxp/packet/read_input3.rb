@@ -8,6 +8,13 @@ class LXP
       # Decode the data and return a hash of values in this input packet
       def to_h
         {
+          # 0 = static 1
+          # 1 = R_INPUT
+          # 2..12 = serial
+          # 13/14 = length
+
+          # 15..16? .. (observed: 10)
+
           max_chg_curr: Utils.int(@data[17, 2]) / 100.0, # A
           max_dischg_curr: Utils.int(@data[19, 2]) / 100.0, # A
           charge_volt_ref: Utils.int(@data[21, 2]) / 10.0, # V
@@ -27,7 +34,8 @@ class LXP
           bat_status_9: @data[43],
           bat_status_inv: @data[45]
 
-          # 47/48 = battery count?
+          # 47/48 = battery count? seen a 6 but unconfirmed it changes
+          # when battery count does.. TODO..
         }
       end
     end

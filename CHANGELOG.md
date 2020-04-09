@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `t_bat` key in `ReadInput2#to_h` (suspect this is Lead Acid only as mine is 0)
+- support 3 PV strings in `ReadInput1` and `ReadInput2`
+- support 3 phase power in `ReadInput1`
+- support `t_bat` key in `ReadInput2#to_h` (suspect this is Lead Acid only as mine is 0)
 
 ### Fixed
 
