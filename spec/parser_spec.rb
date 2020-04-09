@@ -97,7 +97,7 @@ RSpec.describe LXP::Packet::Parser do
 
     describe '#to_h' do
       subject { packet.to_h }
-      it { is_expected.to eq e_chg_all: 1316.1, e_dischg_all: 1207.6, e_eps_all: 0.0, e_inv_all: 990.7, e_pv_all: 1774.7, e_pv_1_all: 1774.7, e_pv_2_all: 0.0, e_pv_3_all: 0.0, e_rec_all: 1156.3, e_to_grid_all: 137.5, e_to_user_all: 1183.9, t_bat: 0, t_inner: 48, t_rad_1: 36, t_rad_2: 37 }
+      it { is_expected.to eq e_chg_all: 1316.1, e_dischg_all: 1207.6, e_eps_all: 0.0, e_inv_all: 990.7, e_pv_all: 1774.7, e_pv_1_all: 1774.7, e_pv_2_all: 0.0, e_pv_3_all: 0.0, e_rec_all: 1156.3, e_to_grid_all: 137.5, e_to_user_all: 1183.9, t_bat: 0, t_inner: 48, t_rad_1: 36, t_rad_2: 37, uptime: 14714915 }
     end
   end
 end

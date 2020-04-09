@@ -34,7 +34,11 @@ class LXP
           t_inner: Utils.int(@data[63, 2]),
           t_rad_1: Utils.int(@data[65, 2]),
           t_rad_2: Utils.int(@data[67, 2]),
-          t_bat: Utils.int(@data[69, 2])
+          t_bat: Utils.int(@data[69, 2]),
+
+          # 71..72 ?
+
+          uptime: Utils.int(@data[73, 4]) # seconds
         }
       end
     end
