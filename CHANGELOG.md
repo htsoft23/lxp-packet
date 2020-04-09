@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.5.0] - 2020-04-09
+
 ### Added
 
 - support 3 PV strings in `ReadInput1` and `ReadInput2`
