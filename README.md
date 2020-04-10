@@ -44,6 +44,14 @@ It can optionally be configured with a second network endpoint; I set this to TC
 
 Alternatively you can probably just change the first setting if you don't care about the official Lux portal or mobile app being updated, though I found it useful to verify I was setting the right values at first. This would also prevent LuxPower sending you firmware updates (for better or for worse), not that I've had any so far.
 
+## Inverter Fundamentals
+
+The inverter has two basic sets of information.
+
+There are 114 registers (0-113), which are also referred to as "holdings". See [doc/LXP_REGISTERS.txt](doc/LXP_REGISTERS.txt) for a list of them. Most of these you can write, and they affect inverter operation. Some pieces of information span several registers, for example the serial number is in registers 2 through 8.
+
+Additionally there is input data. This is transient information which the inverter broadcasts to any connected client every 2 minutes. I've not found a way to request this on demand, you just have to wait. These are sent as sets of 3 packets. `ReadInput1` / `ReadInput2` / `ReadInput3` are used to parse these.
+
 ## Examples
 
 The inverter requires that your datalog serial and inverter serial are in the packets you send to it for it to respond.
@@ -75,7 +83,7 @@ This is necessary because occasionally the inverter will send us state data and 
 
 ### Reading
 
-This is the simplest use-case; read the value of something from the inverter.
+This is the simplest use-case; read the value of a register from the inverter.
 
 ```ruby
 pkt = LXP::Packet::ReadHold.new
@@ -96,9 +104,17 @@ r = read_reply(sock, pkt)
 puts "Received: #{r.value}" # should be discharge cut-off value
 ```
 
-Usually, `ReadHold` instances contain the details of just one register. However, it is possible they can contain multiple. Pressing "Read" on the LuxPower Web Portal provokes the inverter into sending out 5 packets that each contain multiple registers, for example. [TODO: work out how to request these packets ourselves]
+Usually, `ReadHold` instances contain the details of just one register. However, it is possible they can contain multiple. Pressing "Read" on the LuxPower Web Portal provokes the inverter into sending out 5 packets that each contain multiple registers, for example.
 
-To access these, you can use subscript notation to get a register directly, or call `#to_h` to get a hash of registers/values. For convenience this also works with single register packets, though obviously only one subscript will ever return data, and `to_h` will only have one key.
+To do this yourself, set `#value` in a `ReadHold` you're going to send to the inverter. This tells it how many registers you want in the reply, and they'll start from the number set in `#register`:
+
+```ruby
+# get registers 0 through 22 inclusive:
+pkt.register = 0
+pkt.value = 23
+```
+
+To access these in the reply, you can use subscript notation to get a register directly, or call `#to_h` to get a hash of registers/values. For convenience this also works with single register packets, though obviously only one subscript will ever return data, and `to_h` will only have one key.
 
 ```ruby
 # assuming pkt is a parsed packet with multiple registers/values:

@@ -12,9 +12,9 @@ class LXP
         self.device_function = DeviceFunctions::READ_HOLD
 
         self.data_length = 18
-        # start by assuming this packet will be sent to the inverter.
-        # we need to put a 1 in the value to get the inverter to
-        # populate the reply.
+
+        # in ReadHold packets, the value is the number of registers
+        # we want to read. Default to 1.
         self.value = 1
       end
 
