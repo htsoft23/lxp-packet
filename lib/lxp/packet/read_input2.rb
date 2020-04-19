@@ -38,6 +38,8 @@ class LXP
 
           # 71..72 ?
 
+          # this actually seems to be cumulative runtime.
+          # not found an uptime since reboot yet.
           uptime: Utils.int(@data[73, 4]) # seconds
         }
       end
