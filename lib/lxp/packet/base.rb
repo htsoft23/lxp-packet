@@ -16,9 +16,9 @@ class LXP
       attr_accessor :chksum
 
       def initialize
-        @header = [0] * 20
-        @data = [0] * 16
-        @chksum = [0, 0]
+        @header ||= [0] * 20
+        @data ||= [0] * 16
+        @chksum ||= [0, 0]
 
         # prefix
         @header[0] = 161

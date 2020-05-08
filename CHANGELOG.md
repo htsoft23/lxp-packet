@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - support for requesting input registers on demand
+- support for sending heartbeats
 
 ## [0.6.0] - 2020-04-10
 

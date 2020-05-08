@@ -17,9 +17,17 @@ class LXP
     #
     class Heartbeat < Base
       def initialize
+        @header = [0] * 19
+
         super
 
+        self.packet_length = 13
+        self.protocol = 2
         self.tcp_function = TcpFunctions::HEARTBEAT
+      end
+
+      def bytes
+        header
       end
     end
   end
