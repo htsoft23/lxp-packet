@@ -131,7 +131,7 @@ pkt.to_h # { 21 => 62292 }
 
 This is similar to reading holdings. The inverter should send these packets every 2 minutes anyway, but if you want them on demand, you can create a `ReadInput1` (or 2, or 3) and send it.
 
-Each packet type contains a bunch of data, the simplest way to get at these is to call `to_h` on the packet, which returns a Hash of data:
+The response packet contains a bunch of data, the simplest way to get at these is to call `to_h` on the packet, which returns a Hash of data:
 
 ```ruby
 pkt = LXP::Packet::ReadInput1.new
