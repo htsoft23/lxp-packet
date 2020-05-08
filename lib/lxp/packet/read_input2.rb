@@ -5,6 +5,13 @@ require_relative 'read_input'
 class LXP
   class Packet
     class ReadInput2 < ReadInput
+      def initialize
+        super
+
+        self.register = 40
+        self.value = 40
+      end
+
       # Decode the data and return a hash of values in this input packet
       def to_h
         {

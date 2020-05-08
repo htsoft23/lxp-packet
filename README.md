@@ -50,7 +50,7 @@ The inverter has two basic sets of information.
 
 There are 114 registers (0-113), which are also referred to as "holdings". See [doc/LXP_REGISTERS.txt](doc/LXP_REGISTERS.txt) for a list of them. Most of these you can write, and they affect inverter operation. Some pieces of information span several registers, for example the serial number is in registers 2 through 8.
 
-Additionally there is input data. This is transient information which the inverter broadcasts to any connected client every 2 minutes. I've not found a way to request this on demand, you just have to wait. These are sent as sets of 3 packets. `ReadInput1` / `ReadInput2` / `ReadInput3` are used to parse these.
+Additionally there are input registers. These are transient information which the inverter broadcasts to any connected client every 2 minutes. These are sent as sets of 3 packets. `ReadInput1` / `ReadInput2` / `ReadInput3` are used to parse these.
 
 ## Examples
 
@@ -81,9 +81,9 @@ end
 
 This is necessary because occasionally the inverter will send us state data and heartbeats, as well as replies for other clients (see above) which we need to either process (if you're interested in them) or ignore (which is easier, and done here).
 
-### Reading
+### Reading Holding Registers
 
-This is the simplest use-case; read the value of a register from the inverter.
+This is the simplest use-case; read the value of a holding register from the inverter.
 
 ```ruby
 pkt = LXP::Packet::ReadHold.new
@@ -125,6 +125,26 @@ pkt.to_h # { 0 => 35462, 1 => 1, ... }
 pkt[21] # => value of register 21
 pkt[22] # => nil
 pkt.to_h # { 21 => 62292 }
+```
+
+### Reading Input Registers
+
+This is similar to reading holdings. The inverter should send these packets every 2 minutes anyway, but if you want them on demand, you can create a `ReadInput1` (or 2, or 3) and send it.
+
+Each packet type contains a bunch of data, the simplest way to get at these is to call `to_h` on the packet, which returns a Hash of data:
+
+```ruby
+pkt = LXP::Packet::ReadInput1.new
+pkt.datalog_serial = 'AB12345678'
+pkt.inverter_serial = '1234567890'
+
+# assuming your inverter is at 192.168.0.30
+sock = TCPSocket.new('192.168.0.30', 4346)
+sock.write(out)
+
+r = read_reply(sock, pkt)
+# r is a populated ReadInput1, which responds to #to_h:
+r.to_h # => {:status=>16, :soc=>79, ... }
 ```
 
 

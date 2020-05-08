@@ -28,15 +28,13 @@ Then there's a header:
                                 194=data to translate
                                 195=read param 196=write param
     8    10       datalog serial number
-   18     2       data frame length or heartbeat number?
+   18     2       data frame length
 
-Mostly the packets I've been dealing with have TCP_FUNCTION 194. I ignore
-heartbeats, and I've not seen 195 or 196 I don't think.
 
-For 194, bytes 18/19 are the data frame length which should match the number
-of bytes that follows. It's sometimes easier to think of the dataframe as
-its own structure so here are byte offsets in both the dataframe and the entire
-packet:
+For TCP_FUNCTION 194, bytes 18/19 are the data frame length which should match
+the number of bytes that follows. It's sometimes easier to think of the
+dataframe as its own structure so here are byte offsets in both the dataframe
+and the entire packet:
 
  BYTE BYTES VALUE MEANING
  0/20     1       address? 0 when writing to inverter, 1 when reading?
@@ -56,9 +54,6 @@ between R_HOLD and R_INPUT yet. W_SINGLE writes a single register; not used
 W_MULTI.
 
 To get the inverter to populate the response value for an R_HOLD, the value
-you send seems to need to be 1.
-
-Register and value are also referred to as start address and point number;
-this seems to be for the regular stats the inverter sends out every 2 minutes;
-seems to send 3 packets, the first one with address 0, then 40, then 80.
-Not really done much with this yet.
+you send needs to be above 0. This tells the inverter how many registers you
+want to read. Normally this is 1, if its higher than you'll get seqeuential
+registers
